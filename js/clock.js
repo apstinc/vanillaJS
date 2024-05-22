@@ -1,29 +1,35 @@
-const loginForm = document.querySelector("#login-form");
-const loginInput = document.querySelector("#login-form input");
-const greeting = document.querySelector("#greeting");
+const clock = document.querySelector("h2#clock");
 
-const HIDDEN_CLASSNAME = "hidden";
-const USERNAME_KEY = "username";
+// // Interval 5초마다
+// function sayHello(){
+//     console.log("hello");
+// }
+// setInterval(sayHello, 5000);
 
 
-function onLoginSubmit(event){
-    event.preventDefault();  // BLOCK REFRESH
-    loginForm.classList.add(HIDDEN_CLASSNAME);
-    const username = loginInput.value; // greeting.innerText = "Hello " + username;
-    localStorage.setItem(USERNAME_KEY,username); //name of item, value
-    paintGreetings(username);
+// // timeout 3초후 실행
+// function sayHello(){
+//     console.log("hello");
+// }
+// setTimeout(sayHello,3000);
+
+
+// function getClock() {
+//     const date = new Date();
+//     clock.innerText = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+// }
+// getClock()
+// setInterval(getClock,1000);
+
+// 시간형태 2자리씩 채워주기
+function getClock() {
+    const date = new Date();
+    const hours = (String(date.getHours()).padStart(2,"0"));
+    const APm  = (hours < 13) ? "AM":"PM";
+    const Hours = (hours < 13) ? hours : (hours-12) ;
+    const Minutes = String(date.getMinutes()).padStart(2,"0");
+    const Seconds = String(date.getSeconds()).padStart(2,"0");
+    clock.innerText = `${Hours}:${Minutes}:${Seconds} ${APm}`;
 }
-
-function paintGreetings(username){
-    greeting.innerText = `Hello ${username}!`;
-    greeting.classList.remove(HIDDEN_CLASSNAME);
-}
-
-const savedUsername = localStorage.getItem(USERNAME_KEY);
-
-if(savedUsername === null){
-    loginForm.classList.remove(HIDDEN_CLASSNAME);
-    loginForm.addEventListener("submit", onLoginSubmit);
-}else{
-    paintGreetings(savedUsername);
-}
+getClock()
+setInterval(getClock,1000);
